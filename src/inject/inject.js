@@ -7,19 +7,55 @@ chrome.extension.sendMessage({}, function(response) {
 		// This part of the script triggers when page is done loading
 		console.log("Hello. This message was sent from scripts/inject.js");
 		// ----------------------------------------------------------
+		var regexes = [
+			"buzzfeed\.com",
+			"elitedaily\.com"
+		];
+		var bannedSitesRegex = joinRegexes(regexes);
+		console.log(bannedSitesRegex);
+		var filter = new filterNewsfeed(bannedSitesRegex);
+		filter.removePosts();
+		// filter.removePosts(bannedSitesRegex);
 		var newsfeed = $('#topnews_main_stream_408239535924329');
-		findBuzzFeedPosts(newsfeed);
+		// findBuzzFeedPosts(newsfeed);
 
 		$(newsfeed).bind('DOMNodeInserted', function(e) {
-			findBuzzFeedPosts(e);
+			filter.removePosts();
+			// findBuzzFeedPosts(e);
+			// filterNewsfeed(bannedSitesRegex);
 		});
 	}
 	}, 10);
 });
 
+function joinRegexes(regexes) {
+	return(new RegExp(regexes.join("|"), "i"));
+}
+
+function filterNewsfeed(regex) {
+
+	this.newsfeed = $('#topnews_main_stream_408239535924329');
+	this.newsfeedDivSelector = $('._52c6');
+	this.newsfeedPostDivSelector = '._4-u2.mbm._5jmm._5pat._5v3q._5x16';
+	this.regex = regex;
+
+	this.removePosts = function() {
+		var urls = $(this.newsfeed).find(this.newsfeedDivSelector);
+		for (var i=0; i<urls.length; i++) {
+			var temp = /buzzfeed\.com/i;
+			if (temp.test(urls[i].href)) {
+				console.log("buzzfeed url: " + urls[i].href);
+			}
+			if (this.regex.test(urls[i].href)) {
+				console.log($(urls[i]).closest('.userContentWrapper'));
+				$(urls[i]).closest(this.newsfeedPostDivSelector).remove();
+			}
+		}
+	};
+}
+
 function findBuzzFeedPosts(newsfeed) {
 	var urls = $(newsfeed).find('._52c6');
-	// console.log(urls);
 	var buzzFeedRegex = /buzzfeed\.com/
 	var buzzfeedPosts = [];
 	for (var i=0; i<urls.length; i++) {
@@ -28,12 +64,5 @@ function findBuzzFeedPosts(newsfeed) {
 			$(urls[i]).closest("._4-u2.mbm._5jmm._5pat._5v3q._5x16").remove();
 		}
 	}
-}
-
-function removePosts(obj) {
-	obj.each(function(index) {
-		console.log("Hello!");
-		console.log( index + ": " + $( this ).text() );
-	});
 }
 
