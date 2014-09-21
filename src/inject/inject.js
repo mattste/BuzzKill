@@ -8,8 +8,7 @@ chrome.extension.sendMessage({}, function(response) {
 		console.log("Hello. This message was sent from scripts/inject.js");
 		// ----------------------------------------------------------
 		var regexes = [
-			"buzzfeed\.com",
-			"elitedaily\.com"
+			"buzzfeed\.com"
 		];
 		var bannedSitesRegex = joinRegexes(regexes);
 		console.log(bannedSitesRegex);
