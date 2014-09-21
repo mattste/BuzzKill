@@ -27,11 +27,6 @@ function findBuzzFeedPosts(newsfeed) {
 			console.log("what now buzzfeed " + urls[i].href);
 			$(urls[i]).closest("._4-u2.mbm._5jmm._5pat._5v3q._5x16").remove();
 		}
-		// if (urls[i].href.indexOf("buzzfeed.com") > -1) {
-		// 	console.log("I FOUND YOU buzzfeed: " + urls[i].href);
-		// 	$(urls[i]).closest("._4-u2.mbm._5jmm._5pat._5v3q._5x16").remove();
-		// }
-		// console.log("url: " + urls[i].href + " test: " + buzzFeedRegex.test("http://l.facebook.com/l.php?u=http%3A%2F%2Fwww.buzzfeed.com%2Ftomphillips%2Fplease-like-me%233ujrp3z&h=bAQEaqFQ7AQF5mM64I_fL-B-jP6U1ZkQAxKHlLMSEalUxcQ&enc=AZPp7VMxdXNREKroipeU82DhdPJzsFGwqtsQOMSI-b_NP1ajlmD1mmTEhHW-ZsggRkLtcoWxSMY1GKmOtuHimZazds0yqgThR7jvODYE7uyuE1SGlf_Nd15cnNxWAs4ZZfDNFfHO2e3f9TNs5RWn7W-l&s=1"));
 	}
 }
 
