@@ -15,14 +15,11 @@ chrome.extension.sendMessage({}, function(response) {
 		console.log(bannedSitesRegex);
 		var filter = new filterNewsfeed(bannedSitesRegex);
 		filter.removePosts();
-		// filter.removePosts(bannedSitesRegex);
-		var newsfeed = $('#topnews_main_stream_408239535924329');
-		// findBuzzFeedPosts(newsfeed);
 
+		var newsfeed = $('#topnews_main_stream_408239535924329');
 		$(newsfeed).bind('DOMNodeInserted', function(e) {
-			filter.removePosts();
-			// findBuzzFeedPosts(e);
-			// filterNewsfeed(bannedSitesRegex);
+			var activeFilter = new filterNewsfeed(bannedSitesRegex);
+			activeFilter.removePosts();
 		});
 	}
 	}, 10);
@@ -52,17 +49,5 @@ function filterNewsfeed(regex) {
 			}
 		}
 	};
-}
-
-function findBuzzFeedPosts(newsfeed) {
-	var urls = $(newsfeed).find('._52c6');
-	var buzzFeedRegex = /buzzfeed\.com/
-	var buzzfeedPosts = [];
-	for (var i=0; i<urls.length; i++) {
-		if (buzzFeedRegex.test(urls[i].href)) {
-			console.log("what now buzzfeed " + urls[i].href);
-			$(urls[i]).closest("._4-u2.mbm._5jmm._5pat._5v3q._5x16").remove();
-		}
-	}
 }
 
